@@ -58,16 +58,16 @@ def build_udg(
 def alter_udg(
     graph:nx.Graph, hearing_radius:float=50.0
 ) -> nx.Graph:
-    """Alter the given UDG by removing the longest edge from all cliques of size three whose
+    """Alter the given graph by removing the longest edge from all cliques of size three whose
         smallest enclosing circle is larger than the hearing radius (see Gros-desormeaux et al. [1] 
         (see README in the root directory of this repository)).
 
     Args:
-        graph (nx.Graph): The UDG to alter.
+        graph (nx.Graph): The graph to alter.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
 
     Returns:
-        nx.Graph: The altered UDG.
+        nx.Graph: The altered graph.
     """
     smallest_enclosing_circles = get_smallest_enclosing_circles(graph=graph, hearing_radius=hearing_radius)
 

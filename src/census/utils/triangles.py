@@ -3,7 +3,9 @@ import math
 import networkx as nx
 
 
-def point_in_triangle(pt:tuple, p1:tuple, p2:tuple, p3:tuple) -> bool:
+def point_in_triangle(
+    pt:tuple, p1:tuple, p2:tuple, p3:tuple
+) -> bool:
     """Checks if point pt is included in the triangle spanned by points p1, p2 and p3.
 
     Args:
@@ -28,7 +30,9 @@ def point_in_triangle(pt:tuple, p1:tuple, p2:tuple, p3:tuple) -> bool:
     return not (neg and pos)
 
 
-def get_circumcircle(p1:tuple, p2:tuple, p3:tuple) -> tuple:
+def get_circumcircle(
+    p1:tuple, p2:tuple, p3:tuple
+) -> tuple:
     """Calculates the circumcircle of the triangle spanned by points p1, p2 and p3.
 
     Args:
@@ -49,7 +53,9 @@ def get_circumcircle(p1:tuple, p2:tuple, p3:tuple) -> tuple:
     return ((ux, uy), r)
 
 
-def get_smallest_enclosing_circle(clique:tuple, pos:tuple, weights:dict) -> tuple:
+def get_smallest_enclosing_circle(
+    clique:tuple, pos:tuple, weights:dict
+) -> tuple:
     """Calculates the smallest enclosing circle of a clique of size three
         whose circumcenter is not within the triangle spanned by that clique.
 
@@ -69,7 +75,9 @@ def get_smallest_enclosing_circle(clique:tuple, pos:tuple, weights:dict) -> tupl
     return (center, radius)
 
 
-def get_circumcircles(graph:nx.Graph) -> dict:
+def get_circumcircles(
+    graph:nx.Graph
+) -> dict:
     """Calculates the circumcircles of all cliques of size three in the given graph.
 
     Args:
@@ -89,7 +97,9 @@ def get_circumcircles(graph:nx.Graph) -> dict:
     return circumcircles
 
 
-def get_smallest_enclosing_circles(graph:nx.Graph) -> dict:
+def get_smallest_enclosing_circles(
+    graph:nx.Graph
+) -> dict:
     """Calculates the smallest enclosing circle for every clique of size three in the given graph.
 
     Args:

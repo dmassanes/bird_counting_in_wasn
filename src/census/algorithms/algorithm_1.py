@@ -16,7 +16,7 @@ def count_birds(
     Args:
         df (pd.DataFrame): DataFrame containing the classification results. 
                             Must have the columns ["node", "species_name_en", "begin_time", "end_time"].
-        graph (nx.Graph): The graph on which the algorithm will be executed.
+        graph (nx.Graph): The Unit Disk Graph (UDG) on which the algorithm will be executed.
         time_delta_detection (float, optional): Size of the time window in seconds. Defaults to 3.0.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by the node. Defaults to 50.0.
 

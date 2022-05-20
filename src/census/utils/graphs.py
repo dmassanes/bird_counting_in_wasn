@@ -11,12 +11,12 @@ def build_udg(
     df:pd.DataFrame, hearing_radius:float=50.0, coords:str="2d"
 ) -> nx.Graph:
     """Build the Unit Disk Graph (UDG) from the input DataFrame containing either geo- or 2D coordinates for the nodes' locations.
-    Geo-coordinates will be converted to 2D coordinates using the "utm" library.
-    One edge is added to each pair of two nodes whose hearing radii intersect.
+        Geo-coordinates will be converted to 2D coordinates using the "utm" library.
+        One edge is added to each pair of two nodes whose hearing radii intersect.
 
     Args:
         df (pd.DataFrame): DataFrame containing the node information. Must either have the columns ["node", "lat", "lon"] or ["node", "n_x", "n_y"]
-                            depending on the format of the coordinates contained in the DataFrame.
+            depending on the format of the coordinates contained in the DataFrame.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
         coords (str, optional): Can either be "2d" or "geo" depending on the format of the coordinates contained in the dataframe. Defaults to "2d".
 

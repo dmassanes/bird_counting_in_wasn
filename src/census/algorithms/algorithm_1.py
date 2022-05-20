@@ -10,12 +10,11 @@ def count_birds(
     df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0, hearing_radius:float=50.0
 ) -> dict:
     """Estimates the number of birds per species using the classification results in the input DataFrame df.
-        The DataFrame is expected to contain classification results for a specific time period for which
-        the Birds should be counted, e. g. for one day.
 
     Args:
-        df (pd.DataFrame): DataFrame containing the classification results. 
-                            Must have the columns ["node", "species_name_en", "begin_time", "end_time"].
+        df (pd.DataFrame): DataFrame containing the classification results. The DataFrame is expected to contain 
+            classification results for a specific time period for which the Birds should be counted, e. g. for one day.
+            Must have the columns ["node", "species_name_en", "begin_time", "end_time"].
         graph (nx.Graph): The Unit Disk Graph (UDG) on which the algorithm will be executed.
         time_delta_detection (float, optional): Size of the time window in seconds. Defaults to 3.0.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by the node. Defaults to 50.0.

@@ -38,7 +38,7 @@ def get_circumcircle(p1:tuple, p2:tuple, p3:tuple) -> tuple:
 
     Returns:
         tuple: Contains a tuple with the x and y coordinates of the center of the circumcircle and its radius.
-                E.g. ((1.2, 0.8), 2.2).
+            E.g. ((1.2, 0.8), 2.2).
     """
     d = 2 * (p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1]))
     ux = ((p1[0] * p1[0] + p1[1] * p1[1]) * (p2[1] - p3[1]) + (p2[0] * p2[0] + p2[1] * p2[1]) * 
@@ -60,7 +60,7 @@ def get_smallest_enclosing_circle(clique:tuple, pos:tuple, weights:dict) -> tupl
 
     Returns:
         tuple: Contains a tuple with the x and y coordinates of the center of the circle and its radius.
-                E.g. ((1.2, 0.8), 2.2).
+            E.g. ((1.2, 0.8), 2.2).
     """
     longest_edge = max(weights, key=lambda k: weights[k])
     u, v = longest_edge[0], longest_edge[1]
@@ -77,8 +77,8 @@ def get_circumcircles(graph:nx.Graph) -> dict:
 
     Returns:
         dict: Keys are the cliques represented as tuples and values are the circumcircles
-                represented as tuples containing the coordinates and the radius.
-                E.g. (1, 2, 3): ((1.2, 0.8), 2.2).
+            represented as tuples containing the coordinates and the radius.
+            E.g. (1, 2, 3): ((1.2, 0.8), 2.2).
     """
     circumcircles = {}
     pos = nx.get_node_attributes(G=graph, name="pos")
@@ -97,8 +97,8 @@ def get_smallest_enclosing_circles(graph:nx.Graph) -> dict:
 
     Returns:
         dict: Keys are the cliques represented as tuples and values are the circumcircles
-                represented as tuples containing the coordinates and the radius.
-                E.g. (1, 2, 3): ((1.2, 0.8), 2.2).
+            represented as tuples containing the coordinates and the radius.
+            E.g. (1, 2, 3): ((1.2, 0.8), 2.2).
     """
     smallest_circles = {}
 

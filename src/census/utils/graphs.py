@@ -4,6 +4,7 @@ import pandas as pd
 import itertools
 import utm
 import math
+import numpy as np
 from census.utils.triangles import get_smallest_enclosing_circles
 
 
@@ -82,4 +83,27 @@ def alter_udg(
             graph.remove_edge(x, y) # remove it
 
     return graph
+
+
+def get_bb(
+    graph:nx.Graph, hearing_radius:float=50.0
+) -> tuple:
+    """Calculates the bounding box of the graph, i. e. the smallest rectangle enclosing the entire
+        graph including the hearing radii of the nodes.
+
+    Args:
+        graph (nx.Graph): The graph.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+
+    Returns:
+        tuple: Contains two tuples, each containing the min and max values of the bounding box for the x and y coordinates.
+    """
+    pos = nx.get_node_attributes(G=graph, name="pos")
+    pos_x = np.array(list(pos.values()))[:,0]
+    pos_y = np.array(list(pos.values()))[:,1]
+
+    x_lim = (min(pos_x) - hearing_radius, max(pos_x) + hearing_radius)
+    y_lim = (min(pos_y) - hearing_radius, max(pos_y) + hearing_radius)
+
+    return x_lim, y_lim
 

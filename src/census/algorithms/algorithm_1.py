@@ -1,15 +1,21 @@
-"""This module contains the actual counting algorithm."""
+"""This module contains the counting algorithm based on "Algorithm 1" from the paper by 
+Gros-desormeaux et al. [1] (see README in the root directory of this repository)."""
 import networkx as nx
 import datetime as dt
 import pandas as pd
 from census.utils.graphs import alter_udg
 
 
-def count_birds(df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0, hearing_radius:float=50.0) -> dict:
-    """Estimates the number of birds per species using the classification results in the input data frame df.
+def count_birds(
+    df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0, hearing_radius:float=50.0
+) -> dict:
+    """Estimates the number of birds per species using the classification results in the input DataFrame df.
+        The DataFrame is expected to contain classification results for a specific time period for which
+        the Birds should be counted, e. g. for one day.
 
     Args:
-        df (pd.DataFrame): Dataframe containing the classification results. Must have the columns ["node", "species_name_en", "begin_time", "end_time"].
+        df (pd.DataFrame): DataFrame containing the classification results. 
+                            Must have the columns ["node", "species_name_en", "begin_time", "end_time"].
         graph (nx.Graph): The graph on which the algorithm will be executed.
         time_delta_detection (float, optional): Size of the time window in seconds. Defaults to 3.0.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by the node. Defaults to 50.0.
@@ -17,6 +23,9 @@ def count_birds(df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0,
     Returns:
         dict: Keys are the name of species in English, and values are the estimated amount of observable birds for this species.
     """
+
+    # make sure that the dataframe is sorted by begin_time
+    df = df.sort_values("begin_time")
 
     # check if altering is necessary in the current graph
     altered_graph = alter_udg(graph.copy())

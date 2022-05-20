@@ -2,7 +2,7 @@
 import networkx as nx
 import datetime as dt
 import pandas as pd
-import utils
+from census.utils.graphs import alter_udg
 
 
 def count_birds(df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0, hearing_radius:float=50.0) -> dict:
@@ -19,7 +19,7 @@ def count_birds(df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0,
     """
 
     # check if altering is necessary in the current graph
-    altered_graph = utils.alter_udg(graph.copy())
+    altered_graph = alter_udg(graph.copy())
     altering_necessary = altered_graph.__str__() != graph.__str__()
 
     # variables to iterate and count
@@ -62,7 +62,7 @@ def count_birds(df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0,
                 # construct subgraph and alter it if necessary
                 graph_species = nx.Graph(graph.subgraph(nodes_species))
                 if altering_necessary:
-                    graph_species = utils.alter_udg(graph_species, hearing_radius)
+                    graph_species = alter_udg(graph_species, hearing_radius)
 
                 # count birds for current species
                 count = 0

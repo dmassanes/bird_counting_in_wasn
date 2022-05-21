@@ -38,7 +38,7 @@ def plot_birds(
 
 
 def plot_bb(
-    ax:mpl.axes.Axes, graph:nx.Graph, hearing_radius:float=100.0, alpha:float=0.5, with_text=True
+    ax:mpl.axes.Axes, graph:nx.Graph, hearing_radius:float=100.0, alpha:float=0.5, x_lim:float=None, y_lim:float=None, with_text=True
 ) -> None:
     """Plot the bounding box of the graph, i. e. the smallest rectangle enclosing the entire
         graph including the hearing radii of the nodes.
@@ -50,7 +50,8 @@ def plot_bb(
         alpha (float, optional): Opacity of the plotted bounding box. Defaults to 1.0.
         with_text (bool, optional): If True, add text labels describing the size of the bounding box in meters. Defaults to True.
     """
-    x_lim, y_lim = get_bb(graph=graph, hearing_radius=hearing_radius)
+    if not x_lim and not y_lim:
+        x_lim, y_lim = get_bb(graph=graph, hearing_radius=hearing_radius)
 
     # plot text if requested
     if with_text:

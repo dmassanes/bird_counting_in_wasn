@@ -10,12 +10,14 @@ import datetime as dt
 from census.utils.random import generate_graph_diamond_pattern, generate_random_classification_results
 from census.utils.graphs import build_udg
 
-graph = generate_graph_diamond_pattern()
+seed = 1
+
+graph = generate_graph_diamond_pattern(x_rows=2, y_rows=2, seed=seed)
 build_udg(graph=graph)
 
 df = generate_random_classification_results(
     graph=graph,
-    seed=0,
+    seed=seed,
     dt_begin=dt.datetime(1970, 1, 1, 0, 0, 0),
     dt_end=dt.datetime(1970, 1, 1, 0, 0, 30),
     amount_per_species={"comcha": 2, "blucha1": 2},
@@ -28,6 +30,6 @@ print(df)
 print()
 
 print(">>> Markdown output of the generated DataFrame")
-print(df.to_markdown())
+print(df.to_markdown(index=False))
 print()
 

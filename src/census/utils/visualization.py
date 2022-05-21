@@ -36,7 +36,7 @@ def plot_birds(
 
 
 def plot_bb(
-    ax:mpl.axes.Axes, graph:nx.Graph, hearing_radius:float=50.0, alpha:float=0.5, with_text=True
+    ax:mpl.axes.Axes, graph:nx.Graph, hearing_radius:float=100.0, alpha:float=0.5, with_text=True
 ) -> None:
     """Plot the bounding box of the graph, i. e. the smallest rectangle enclosing the entire
         graph including the hearing radii of the nodes.
@@ -44,7 +44,7 @@ def plot_bb(
     Args:
         ax (mpl.axes.Axes): Axes object where the bounding box will be plotted.
         graph (nx.Graph): The graph.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         alpha (float, optional): Opacity of the plotted bounding box. Defaults to 1.0.
         with_text (bool, optional): If True, add text labels describing the size of the bounding box in meters. Defaults to True.
     """
@@ -85,7 +85,7 @@ def draw_circles(
 
 
 def plot_graph(
-    graph:nx.Graph, hearing_radius:float=50.0, ax=None, fig:mpl.figure.Figure=None, figsize:tuple=(10.0,10.0),
+    graph:nx.Graph, hearing_radius:float=100.0, ax=None, fig:mpl.figure.Figure=None, figsize:tuple=(10.0,10.0),
     with_node_labels:bool=False, with_edges:bool=True, with_edge_labels:bool=False, node_size:int=25, 
     with_hearing_radii:bool=False, with_circumcircles:bool=False, with_smallest_circles:bool=False
 ) -> tuple:
@@ -93,7 +93,7 @@ def plot_graph(
 
     Args:
         graph (nx.Graph): The graph.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         ax (mpl.axes.Axes): Axes object where the graph will be plotted. If None, a new Axes object will be created. 
             Please note that this argument should always be assigned in combination with the fig argument, i. e. 
             either both are None or both have a value assigned. Defaults to None.

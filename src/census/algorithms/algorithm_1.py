@@ -7,7 +7,7 @@ from census.utils.graphs import alter_udg
 
 
 def count_birds(
-    df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0, hearing_radius:float=50.0
+    df:pd.DataFrame, graph:nx.Graph, time_delta_detection:float=3.0, hearing_radius:float=100.0
 ) -> dict:
     """Estimates the number of birds per species using the classification results in the input DataFrame df.
 
@@ -17,7 +17,7 @@ def count_birds(
             Must have the columns ["node", "species_code", "begin_time", "end_time"].
         graph (nx.Graph): The Unit Disk Graph (UDG) on which the algorithm will be executed.
         time_delta_detection (float, optional): Size of the time window in seconds. Defaults to 3.0.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by the node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by the node. Defaults to 100.0.
 
     Returns:
         dict: Keys are the name of species in English, and values are the estimated amount of observable birds for this species.

@@ -8,7 +8,7 @@ from census.utils.graphs import get_bb
 
 
 def generate_graph_diamond_pattern(
-    x_rows:int=5, y_rows:int=5, distance_x:float=100.0, distance_y:float=100.0, distance_off:float=15.0, hearing_radius:float=50.0, seed:int=0
+    x_rows:int=5, y_rows:int=5, distance_x:float=100.0, distance_y:float=100.0, distance_off:float=15.0, hearing_radius:float=100.0, seed:int=0
 ) -> pd.DataFrame:
     """Generates a new graph whose nodes are arranged in a diamond pattern.
 
@@ -18,7 +18,7 @@ def generate_graph_diamond_pattern(
         distance_x (float, optional): Default distance between the nodes in the x-axis in meters. Defaults to 100.0.
         distance_y (float, optional): Default distance between the nodes in the y-axis in meters. Defaults to 100.0.
         distance_off (float, optional): Circular offset from the position given by the pattern in meters. Defaults to 15.0.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         seed (int, optional): Seed for reproducibility. Defaults to 0.
 
     Returns:
@@ -47,21 +47,21 @@ def generate_graph_diamond_pattern(
 
 
 def generate_random_classification_results(
-    graph:nx.Graph, hearing_radius:float=50.0, seed:int=0,
-    dt_begin:dt.datetime=dt.datetime(1970, 1, 1), dt_end:dt.datetime=dt.datetime(1970, 1, 2), 
-    amount_per_species:dict={"comcha": 10}, songs_per_bird:dict={"comcha": (1000, 2500)},
+    graph:nx.Graph, hearing_radius:float=100.0, seed:int=0,
+    dt_begin:dt.datetime=dt.datetime(1970, 1, 1, 0, 0, 0), dt_end:dt.datetime=dt.datetime(1970, 1, 1, 3, 0, 0), 
+    amount_per_species:dict={"comcha": 3}, songs_per_bird:dict={"comcha": (125, 300)},
 ) -> pd.DataFrame:
     """Randomly generates classification results given a set of birds and a per-species interval containing
         the minimum and maximum number of songs per bird of that species for a given time period.
 
     Args:
         graph (nx.Graph): The graph.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         seed (int, optional): Seed for reproducibility. Defaults to 0.
-        dt_begin (dt.datetime): Start of the time period. Defaults to dt.datetime(1970, 1, 1).
-        dt_end (dt.datetime): End of the time period. Defaults to dt.datetime(1970, 1, 2).
-        amount_per_species (dict): Amount of birds per species. Defaults to {"comcha": 10}.
-        songs_per_bird (dict): Min and max amount of songs per bird per species. Defaults to {"comcha": (1000, 2500)}.
+        dt_begin (dt.datetime): Start of the time period. Defaults to dt.datetime(1970, 1, 1, 0, 0, 0).
+        dt_end (dt.datetime): End of the time period. Defaults to dt.datetime(1970, 1, 1, 3, 0, 0).
+        amount_per_species (dict): Amount of birds per species. Defaults to {"comcha": 3}.
+        songs_per_bird (dict): Min and max amount of songs per bird per species. Defaults to {"comcha": (125, 300)}.
 
     Returns:
         pd.DataFrame: Contains all the necessary information for the algorithm. 
@@ -88,7 +88,7 @@ def generate_random_classification_results(
     pos_x = np.array(list(pos.values()))[:,0]
     pos_y = np.array(list(pos.values()))[:,1]
     idx = 0
-    for i, (species_code, true_count) in enumerate(amount_per_species):
+    for i, (species_code, true_count) in enumerate(amount_per_species.items()):
 
         for j in range(true_count):
             songs_this_bird = np.random.randint(low=songs_per_bird[species_code][0], high=songs_per_bird[species_code][1] + 1)

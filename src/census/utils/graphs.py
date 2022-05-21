@@ -9,7 +9,7 @@ from census.utils.triangles import get_smallest_enclosing_circles
 
 
 def build_udg(
-    df:pd.DataFrame, hearing_radius:float=50.0, coords:str="2d"
+    df:pd.DataFrame, hearing_radius:float=100.0, coords:str="2d"
 ) -> nx.Graph:
     """Build the Unit Disk Graph (UDG) from the input DataFrame containing either geo- or 2D coordinates for the nodes' locations.
         Geo-coordinates will be converted to 2D coordinates using the "utm" library.
@@ -18,7 +18,7 @@ def build_udg(
     Args:
         df (pd.DataFrame): DataFrame containing the node information. Must either have the columns ["node", "lat", "lon"] or ["node", "n_x", "n_y"]
             depending on the format of the coordinates contained in the DataFrame.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         coords (str, optional): Can either be "2d" or "geo" depending on the format of the coordinates contained in the dataframe. Defaults to "2d".
 
     Returns:
@@ -57,7 +57,7 @@ def build_udg(
 
 
 def alter_udg(
-    graph:nx.Graph, hearing_radius:float=50.0
+    graph:nx.Graph, hearing_radius:float=100.0
 ) -> nx.Graph:
     """Alter the given graph by removing the longest edge from all cliques of size three whose
         smallest enclosing circle is larger than the hearing radius (see Gros-desormeaux et al. [1] 
@@ -65,7 +65,7 @@ def alter_udg(
 
     Args:
         graph (nx.Graph): The graph to alter.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
 
     Returns:
         nx.Graph: The altered graph.
@@ -86,14 +86,14 @@ def alter_udg(
 
 
 def get_bb(
-    graph:nx.Graph, hearing_radius:float=50.0
+    graph:nx.Graph, hearing_radius:float=100.0
 ) -> tuple:
     """Calculates the bounding box of the graph, i. e. the smallest rectangle enclosing the entire
         graph including the hearing radii of the nodes.
 
     Args:
         graph (nx.Graph): The graph.
-        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 50.0.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
 
     Returns:
         tuple: Contains two tuples, each containing the min and max values of the bounding box for the x and y coordinates.

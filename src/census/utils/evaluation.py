@@ -1,4 +1,6 @@
-"""This module contains helper functions related to evaluations of the project."""
+"""
+This module contains helper functions related to evaluations of the project.
+"""
 import numpy as np
 import pandas as pd
 import math

@@ -1,5 +1,7 @@
-"""This module contains the counting algorithm based on "Algorithm 1" from the paper by 
-Gros-desormeaux et al. [1] (see README in the root directory of this repository)."""
+"""
+This module contains the counting algorithm based on "Algorithm 1" from the paper by 
+Gros-desormeaux et al. [1] (see README in the root directory of this repository).
+"""
 import networkx as nx
 import datetime as dt
 import pandas as pd

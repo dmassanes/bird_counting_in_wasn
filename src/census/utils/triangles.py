@@ -1,4 +1,6 @@
-"""This module contains helper functions related to 2D triangles, used for the algorithm and related visualizations."""
+"""
+This module contains helper functions related to 2D triangles, used for the algorithm and related visualizations.
+"""
 import math
 import networkx as nx
 
@@ -124,12 +126,12 @@ def get_smallest_enclosing_circles(
         crt_weights = {(u, v): weights[u, v], (u, w): weights[u, w], (v, w): weights[v, w]}
 
         # calc get_circumcircle of current clique
-        crt_circumcirc = get_circumcircle((pos[u], pos[v], pos[w]))
+        crt_circumcirc = get_circumcircle(pos[u], pos[v], pos[w])
 
         # circumcenter is not in the triangle -> smallest circle is on the longest edge
         if not point_in_triangle(crt_circumcirc[0], pos[u], pos[v], pos[w]):
             crt_pos = {u: pos[u], v: pos[v], w: pos[w]}
-            smallest_circles[(u, v, w)] = get_smallest_enclosing_circle(graph=graph, clique=(u, v, w), pos=crt_pos, weights=crt_weights)
+            smallest_circles[(u, v, w)] = get_smallest_enclosing_circle(clique=(u, v, w), pos=crt_pos, weights=crt_weights)
         # circumcircle is already the smallest circle
         else:
             smallest_circles[(u, v, w)] = crt_circumcirc

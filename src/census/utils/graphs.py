@@ -1,4 +1,6 @@
-"""This module contains util/helper functions related to graphs."""
+"""
+This module contains util/helper functions related to graphs.
+"""
 import networkx as nx
 import itertools
 import math

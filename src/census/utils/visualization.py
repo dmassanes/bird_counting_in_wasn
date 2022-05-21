@@ -1,4 +1,6 @@
-"""This module contains helper functions related to visualization of the graphs and algorithms."""
+"""
+This module contains helper functions related to visualization of the graphs and algorithms.
+"""
 import matplotlib as mpl
 import pandas as pd
 import networkx as nx
@@ -6,7 +8,7 @@ import matplotlib.pyplot as plt
 from census.utils.triangles import get_smallest_enclosing_circles
 from census.utils.triangles import get_circumcircles
 from census.utils.graphs import get_bb
-
+from census.utils.definitions import taxonomy
 
 def plot_birds(
     df:pd.DataFrame, ax:mpl.axes.Axes, species_code_list:list=None, alpha:float=1.0, cmap:mpl.colors.Colormap=None
@@ -32,7 +34,7 @@ def plot_birds(
     for idx, species_code in enumerate(species_code_list):
         df_crt = df.loc[df["species_code"] == species_code]
         color_crt = colors[idx]
-        ax.scatter(list(df_crt["b_x"]), list(df_crt["b_y"]), color=color_crt, alpha=alpha, label=species_code, marker="x")
+        ax.scatter(list(df_crt["b_x"]), list(df_crt["b_y"]), color=color_crt, alpha=alpha, label=taxonomy[species_code].split("_")[-1], marker="x")
 
 
 def plot_bb(
@@ -122,7 +124,7 @@ def plot_graph(
 
     # actual drawing of the graph
     pos = nx.get_node_attributes(G=graph, name="pos")
-    nx.draw_networkx_nodes(G=graph, pos=pos, ax=ax, node_size=node_size, node_color="blue")
+    nx.draw_networkx_nodes(G=graph, pos=pos, ax=ax, node_size=node_size, node_color="tab:gray", edgecolors="black")
     if with_edges:
         nx.draw_networkx_edges(G=graph, pos=pos, ax=ax)
     if with_node_labels:
@@ -136,7 +138,7 @@ def plot_graph(
     # draw hearing radii
     if with_hearing_radii:
         for crt_pos in pos.values():
-            circ_patch = mpl.patches.Circle(crt_pos, radius=hearing_radius, color="blue", fill=False, clip_on=False, alpha=0.5)
+            circ_patch = mpl.patches.Circle(crt_pos, radius=hearing_radius, color="tab:gray", fill=False, clip_on=False, alpha=1.0)
             ax.add_patch(circ_patch)
 
     # draw smallest circles

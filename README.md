@@ -16,7 +16,7 @@ The following figure illustrates the procedure for a one-time step. The three re
 
 ![Best-case example](images/best-case_example_1.jpg)
 
-## Implementation details
+# Implementation details
 
 The implementations contained in this repository rely on the following Python libraries:
 - NetworkX (https://networkx.org/): Used for generating, processing, and visualizing graphs and executing algorithms on them.
@@ -24,7 +24,7 @@ The implementations contained in this repository rely on the following Python li
 - NumPy (https://numpy.org/): Used mainly for randomized tasks.
 - Matplotlib (https://matplotlib.org/): Used for visualizations and plots.
 
-### Data handling
+## Data handling
 
 |   node |      n_x |     n_y | begin_time                 | end_time                   | species_code   |       b_x |     b_y |   true_count |
 |-------:|---------:|--------:|:---------------------------|:---------------------------|:---------------|----------:|--------:|-------------:|
@@ -34,11 +34,11 @@ The implementations contained in this repository rely on the following Python li
 |      2 | 103.368  | 109.134 | 1970-01-01 00:00:19.486614 | 1970-01-01 00:00:22.486614 | comcha         |   16.5272 | 110.164 |            2 |
 |      3 | -10.1697 | 195.863 | 1970-01-01 00:00:19.486614 | 1970-01-01 00:00:22.486614 | comcha         |   16.5272 | 110.164 |            2 |
 
-### One-time step/window
+## One-time step/window
 
 
 
-### Alternating the UDG
+## Alternating the UDG
 
 
 

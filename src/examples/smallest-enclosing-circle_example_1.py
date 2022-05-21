@@ -1,5 +1,8 @@
 """
-This example
+This example generates a plot illustrating the three possible scenarios for the smallest enclosing circle 
+in a clique of size three. The circumcircle is the smallest enclosing circle, the smallest enclosing circle 
+is on the longest edge of the clique, or the smallest enclosing circle is too big, which means the cliques' 
+unit disks do not intersect mutually. The resulting plot is used in the main README.md of this repository.
 """
 import networkx as nx
 import matplotlib.pyplot as plt

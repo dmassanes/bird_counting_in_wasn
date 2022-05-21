@@ -14,7 +14,7 @@ def count_birds(
     Args:
         df (pd.DataFrame): DataFrame containing the classification results. The DataFrame is expected to contain 
             classification results for a specific time period for which the Birds should be counted, e. g. for one day.
-            Must have the columns ["node", "species_name_en", "begin_time", "end_time"].
+            Must have the columns ["node", "species_code", "begin_time", "end_time"].
         graph (nx.Graph): The Unit Disk Graph (UDG) on which the algorithm will be executed.
         time_delta_detection (float, optional): Size of the time window in seconds. Defaults to 3.0.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by the node. Defaults to 50.0.
@@ -35,8 +35,8 @@ def count_birds(
     wdw_begin = df["begin_time"].min() # begin time of the time window
     wdw_end = wdw_begin + wdw_delta # end time of the time window
     last_stamp = df["end_time"].max() # last time in the dataframe
-    species_names = sorted(df["species_name_en"].drop_duplicates()) # all species contained in the dataframe
-    species_count = {species: 1 for species in species_names} # initialize dictionary used for the counting
+    species_codes = sorted(df["species_code"].drop_duplicates()) # all species contained in the dataframe
+    species_count = {species: 1 for species in species_codes} # initialize dictionary used for the counting
 
     # iterate over the dataframe with the time window and count birds
     while wdw_begin < last_stamp:
@@ -53,15 +53,15 @@ def count_birds(
             continue
 
         # summarize redundant classification results
-        df_wdw = df_wdw[["node","species_name_en"]].drop_duplicates()
+        df_wdw = df_wdw[["node","species_code"]].drop_duplicates()
 
         # current time window contains only one bird for the contained species
-        if len(df_wdw.index) == 1 or df_wdw.nunique(axis=0)["species_name_en"] == len(df_wdw.index):
+        if len(df_wdw.index) == 1 or df_wdw.nunique(axis=0)["species_code"] == len(df_wdw.index):
             continue
 
         # execute counting algorithm for every species in the current time window
-        for species_name_en in df_wdw["species_name_en"].drop_duplicates():
-            df_species = df_wdw.loc[df_wdw["species_name_en"] == species_name_en]
+        for species_code in df_wdw["species_code"].drop_duplicates():
+            df_species = df_wdw.loc[df_wdw["species_code"] == species_code]
             nodes_species = list(df_species["node"].drop_duplicates())
 
             # only multiple classification results per species are relevant
@@ -80,8 +80,8 @@ def count_birds(
                     count += 1
 
                 # overwrite estimation if the current number of birds is bigger than the previous max
-                if count > species_count[species_name_en]:
-                    species_count[species_name_en] = count
+                if count > species_count[species_code]:
+                    species_count[species_code] = count
 
     return species_count
 

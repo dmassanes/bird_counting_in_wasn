@@ -9,16 +9,16 @@ from census.utils.graphs import get_bb
 
 
 def plot_birds(
-    df:pd.DataFrame, ax:mpl.axes.Axes, species_name_en_list:list=None, alpha:float=1.0, cmap:mpl.colors.Colormap=None
+    df:pd.DataFrame, ax:mpl.axes.Axes, species_code_list:list=None, alpha:float=1.0, cmap:mpl.colors.Colormap=None
 ) -> None:
     """Plots the birds' positions found in the given DataFrame. To distinct between the species they are coloured differently.
 
     Args:
         df (pd.DataFrame): The DataFrame containing the information about the birds. The DataFrame is expected to contain information
             about the birds' positions for a short time period, e. g. 30 seconds. The plot can get messy if there are too many
-            classification results / birds in the DataFrame. Columns needed: ["species_name_en", "b_x", "b_y"].
+            classification results / birds in the DataFrame. Columns needed: ["species_code", "b_x", "b_y"].
         ax (mpl.axes.Axes): Axes object where the birds will be plotted.
-        species_name_en_list (list): List containing the species names of the birds to get plotted. 
+        species_code_list (list): List containing the species codes of the birds to get plotted.
             If None all species contained in the DataFrame get plotted. Defaults to None.
         alpha (float, optional): Opacity of the plotted markers. Defaults to 1.0.
         cmap (mpl.colors.Colormap, optional): Colormap to be used to distinct between the different species.
@@ -26,13 +26,13 @@ def plot_birds(
     """
     if cmap == None:
         cmap = mpl.cm.get_cmap("hsv")
-    colors = cmap(range(len(species_name_en_list)))
-    if species_name_en_list == None:
-        species_name_en_list = df["species_name_en"].drop_duplicates()
-    for idx, species_name_en in enumerate(species_name_en_list):
-        df_crt = df.loc[df["species_name_en"] == species_name_en]
+    colors = cmap(range(len(species_code_list)))
+    if species_code_list == None:
+        species_code_list = df["species_code"].drop_duplicates()
+    for idx, species_code in enumerate(species_code_list):
+        df_crt = df.loc[df["species_code"] == species_code]
         color_crt = colors[idx]
-        ax.scatter(list(df_crt["b_x"]), list(df_crt["b_y"]), color=color_crt, alpha=alpha, label=species_name_en, marker="x")
+        ax.scatter(list(df_crt["b_x"]), list(df_crt["b_y"]), color=color_crt, alpha=alpha, label=species_code, marker="x")
 
 
 def plot_bb(

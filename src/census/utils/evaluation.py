@@ -85,7 +85,6 @@ def generate_graph_random_conditional(
     graph = nx.Graph()
     area_circle = math.pi * hearing_radius ** 2
     len_bb = math.sqrt(area_circle * n) - hearing_radius * 2
-    print(len_bb)
     i = 0
     while i < n:
         pos = nx.get_node_attributes(G=graph, name="pos")

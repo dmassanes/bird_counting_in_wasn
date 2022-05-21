@@ -69,9 +69,9 @@ def count_birds(
             # only multiple classification results per species are relevant
             if len(nodes_species) > 1:
 
-                # construct subgraph and alter it if necessary
+                # construct subgraph containing all nodes that detected the current species
                 graph_species = nx.Graph(graph.subgraph(nodes_species))
-                if altering_necessary:
+                if altering_necessary: # alter it if necessary
                     graph_species = alter_udg(graph_species, hearing_radius)
 
                 # count birds for current species

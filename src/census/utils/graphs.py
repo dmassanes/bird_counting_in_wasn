@@ -1,52 +1,23 @@
 """This module contains util/helper functions related to graphs."""
 import networkx as nx
-import pandas as pd
 import itertools
-import utm
 import math
 import numpy as np
 from census.utils.triangles import get_smallest_enclosing_circles
 
 
 def build_udg(
-    df:pd.DataFrame, hearing_radius:float=100.0, coords:str="2d"
+    graph:nx.Graph, hearing_radius:float=100.0
 ) -> nx.Graph:
-    """Build the Unit Disk Graph (UDG) from the input DataFrame containing either geo- or 2D coordinates for the nodes' locations.
-        Geo-coordinates will be converted to 2D coordinates using the "utm" library.
-        One edge is added to each pair of two nodes whose hearing radii intersect.
+    """Build the Unit Disk Graph (UDG) from the given graph by adding one edge to each pair of two nodes whose hearing radii intersect.
 
     Args:
-        df (pd.DataFrame): DataFrame containing the node information. Must either have the columns ["node", "lat", "lon"] or ["node", "n_x", "n_y"]
-            depending on the format of the coordinates contained in the DataFrame.
+        graph (nx.Graph): Initial graph containing no edges.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
-        coords (str, optional): Can either be "2d" or "geo" depending on the format of the coordinates contained in the dataframe. Defaults to "2d".
 
     Returns:
         nx.Graph: The constructed UDG.
     """
-    graph = nx.Graph()
-
-    # add nodes from their given 2D coordinates
-    if coords == "2d":
-        df_node = df[["node","n_x","n_y"]].drop_duplicates(subset="node")
-        for idx, row in df_node.iterrows():
-            node = int(row["node"])
-            n_x = row["n_x"]
-            n_y = row["n_y"]
-            graph.add_node(node, pos=(n_x, n_y))
-
-    # add nodes by converting their geo coordinates into 2D coordinates
-    elif coords == "geo":
-        df_node = df[["node","lat","lon"]].drop_duplicates(subset="node")
-        for idx, row in df_node.iterrows():
-            node = int(row["node"])
-            lat = row["lat"]
-            lon = row["lon"]
-            u = utm.from_latlon(lat, lon)
-            n_x, n_y = u[:2]
-            graph.add_node(node, pos=(n_x, n_y))
-
-    # add the edges based on the intersections given by the hearing radius
     for u, v in itertools.combinations(graph.nodes, 2):
         u_coords, v_coords = graph.nodes[u]["pos"], graph.nodes[v]["pos"]
         distance = math.sqrt((u_coords[0] - v_coords[0]) ** 2 + (u_coords[1] - v_coords[1]) ** 2)

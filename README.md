@@ -16,6 +16,18 @@ The following figure illustrates the procedure for a one-time step. The three re
 
 ![Best-case example](images/best-case_example_1.jpg)
 
+## Implementation details
+
+The implementations contained in this repository rely on the following Python libraries:
+- NetworkX: Used for generating, processing, and visualizing graphs and executing algorithms on them.
+- Pandas: Primarily used to handle the information needed by the algorithm in tables represented by DataFrames.
+- NumPy: Used mainly for randomized tasks.
+- Matplotlib: Used for visualizations and plots.
+
+## Data handling
+
+
+
 ## One-time step/window
 
 

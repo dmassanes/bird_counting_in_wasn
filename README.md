@@ -14,7 +14,7 @@ The following steps briefly describe the Algorithm implemented in this repositor
 
 The following figure illustrates the procedure for a one-time step. The three red crosses represent one bird each, singing in that one-time step. The hearing radius for all nodes is 100.0 meters. This example results in the algorithm's correct estimation of birds since it removes exactly three maximal cliques.
 
-![Best-case example](images/best-case_example_1.jpg)
+![Best-case example 1](images/best-case_example_1.jpg)
 
 # Implementation details
 
@@ -40,6 +40,7 @@ The implementations contained in this repository rely on the following Python li
 
 ## Alternating the UDG
 
+![Smallest enclosing circle example 1](images/smallest-enclosing-circle_example_1.jpg)
 
 
 # References

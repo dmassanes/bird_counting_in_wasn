@@ -4,6 +4,7 @@ This repository contains a Python implementation of a bird counting algorithm fo
 
 # Algorithm
 
+![Best-case example](images/best-case_example_1.jpg)
 
 
 # References

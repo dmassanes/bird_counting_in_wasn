@@ -41,7 +41,7 @@ def alter_udg(
     Returns:
         nx.Graph: The altered graph.
     """
-    smallest_enclosing_circles = get_smallest_enclosing_circles(graph=graph, hearing_radius=hearing_radius)
+    smallest_enclosing_circles = get_smallest_enclosing_circles(graph=graph)
 
     for clique, circle in smallest_enclosing_circles.items():
         if circle[1] > hearing_radius: # smallest enclosing circle is bigger than hearing radius

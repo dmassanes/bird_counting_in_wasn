@@ -49,31 +49,29 @@ cmap = mpl.cm.get_cmap("hsv")
 color = cmap(range(1))[0]
 
 fig, ax = plt.subplots(2, 3, figsize=(14, 8))
-fig.suptitle("A best-case example resulting in the algorithm's correct estimation of birds for a one-time window/step.\n" +
-                "The three red crosses represent one bird each, and the algorithm removes exactly the same number of maximal cliques.")
 
 # 0 initial graph
-ax[0, 0].set(title="1. Initial UDG with all nodes")
+ax[0, 0].set(title="Initial UDG with all nodes")
 plot_graph(graph=graph, ax=ax[0, 0], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 0])
 plot_bb(graph=graph, ax=ax[0, 0], x_lim=x_lim, y_lim=y_lim)
 
 # 1 subgraph
-ax[0, 1].set(title="2. Removed the nodes that don't hear birds")
+ax[0, 1].set(title="Subgraph with all nodes that hear birds")
 subgraph = nx.Graph(graph.subgraph(df["node"].drop_duplicates()))
 plot_graph(graph=subgraph, ax=ax[0, 1], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 1])
 plot_bb(graph=subgraph, ax=ax[0, 1], x_lim=x_lim, y_lim=y_lim)
 
 # 2 altered graph
-ax[0, 2].set(title="3. Alternated UDG")
+ax[0, 2].set(title="Alternated UDG")
 altered_graph = alter_udg(subgraph.copy())
 plot_graph(graph=altered_graph, ax=ax[0, 2], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 2])
 plot_bb(graph=altered_graph, ax=ax[0, 2], x_lim=x_lim, y_lim=y_lim)
 
 # 3 first clique
-ax[1, 0].set(title="4. First maximal clique")
+ax[1, 0].set(title="First maximal clique")
 clique = max(nx.find_cliques(G=altered_graph), key=len)
 plot_graph(graph=altered_graph, ax=ax[1, 0], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[1, 0])
@@ -85,7 +83,7 @@ altered_graph.remove_nodes_from(clique)
 df = df.loc[(df["node"] != clique[0]) & (df["node"] != clique[1]) & (df["node"] != clique[2])]
 
 # 4 second clique
-ax[1, 1].set(title="5. Second maximal clique")
+ax[1, 1].set(title="Second maximal clique")
 clique = max(nx.find_cliques(G=altered_graph), key=len)
 plot_graph(graph=altered_graph, ax=ax[1, 1], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[1, 1])
@@ -97,7 +95,7 @@ altered_graph.remove_nodes_from(clique)
 df = df.loc[(df["node"] != clique[0]) & (df["node"] != clique[1])]
 
 # 5 third clique
-ax[1, 2].set(title="6. Third maximal clique")
+ax[1, 2].set(title="Third maximal clique")
 clique = max(nx.find_cliques(G=altered_graph), key=len)
 plot_graph(graph=altered_graph, ax=ax[1, 2], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[1, 2])

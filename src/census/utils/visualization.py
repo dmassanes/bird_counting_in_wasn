@@ -26,9 +26,9 @@ def plot_birds(
     """
     if cmap == None:
         cmap = mpl.cm.get_cmap("hsv")
-    colors = cmap(range(len(species_code_list)))
     if species_code_list == None:
         species_code_list = df["species_code"].drop_duplicates()
+    colors = cmap(range(len(species_code_list)))
     for idx, species_code in enumerate(species_code_list):
         df_crt = df.loc[df["species_code"] == species_code]
         color_crt = colors[idx]

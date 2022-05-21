@@ -1,5 +1,6 @@
 """
-This module contains helper functions related to evaluations of the project.
+This module contains helper functions used to randomly generate
+graphs and dataframes which can be used for evaluations, visualizations, etc.
 """
 import numpy as np
 import pandas as pd

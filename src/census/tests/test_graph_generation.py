@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from census.utils.evaluation import generate_graph_diamond_pattern, generate_graph_random_conditional
+from census.utils.random import generate_graph_diamond_pattern, generate_graph_random_conditional
 from census.utils.graphs import build_udg, get_bb
 from census.utils.visualization import plot_graph, plot_bb
 

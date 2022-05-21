@@ -4,3 +4,4 @@ import census.utils.evaluation
 import census.utils.graphs
 import census.utils.triangles
 import census.utils.visualization
+import census.utils.definitions

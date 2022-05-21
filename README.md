@@ -24,15 +24,15 @@ The implementations contained in this repository rely on the following Python li
 - NumPy (https://numpy.org/): Used mainly for randomized tasks.
 - Matplotlib (https://matplotlib.org/): Used for visualizations and plots.
 
-## Data handling
+### Data handling
 
 
 
-## One-time step/window
+### One-time step/window
 
 
 
-## Alternating the UDG
+### Alternating the UDG
 
 
 

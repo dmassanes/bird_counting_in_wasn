@@ -163,5 +163,5 @@ def generate_random_classification_results(
                         df.loc[idx] = [node, n_x, n_y, begin_time, end_time, species_code, b_pos[0], b_pos[1], true_count]
                         idx += 1
 
-    return df
+    return df.sort_values("begin_time")
 

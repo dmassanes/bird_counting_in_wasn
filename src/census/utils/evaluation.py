@@ -8,42 +8,96 @@ from census.utils.graphs import get_bb
 
 
 def generate_graph_diamond_pattern(
-    x_rows:int=5, y_rows:int=5, distance_x:float=100.0, distance_y:float=100.0, distance_off:float=15.0, hearing_radius:float=100.0, seed:int=0
-) -> pd.DataFrame:
+    x_rows:int=4, y_rows:int=4, distance_x:float=200.0, distance_y:float=200.0, distance_off:float=25.0, hearing_radius:float=100.0, seed:int=0
+) -> nx.Graph:
     """Generates a new graph whose nodes are arranged in a diamond pattern.
 
     Args:
-        x_rows (int, optional): Amount of nodes in the main rows of the x-axis. Defaults to 3.
-        y_rows (int, optional): Amount of nodes in the main rows of the y-axis. Defaults to 3.
-        distance_x (float, optional): Default distance between the nodes in the x-axis in meters. Defaults to 100.0.
-        distance_y (float, optional): Default distance between the nodes in the y-axis in meters. Defaults to 100.0.
-        distance_off (float, optional): Circular offset from the position given by the pattern in meters. Defaults to 15.0.
+        x_rows (int, optional): Amount of nodes in the main rows of the x-axis. Defaults to 4.
+        y_rows (int, optional): Amount of nodes in the main rows of the y-axis. Defaults to 4.
+        distance_x (float, optional): Default distance between the nodes in the x-axis in meters. Defaults to 200.0.
+        distance_y (float, optional): Default distance between the nodes in the y-axis in meters. Defaults to 200.0.
+        distance_off (float, optional): Circular offset from the position given by the pattern in meters. Defaults to 25.0.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         seed (int, optional): Seed for reproducibility. Defaults to 0.
 
     Returns:
-        pd.DataFrame: Contains the nodes and positions. Columns: ["node", "n_x", "n_y"]
+        nx.Graph: The generated graph.
     """
     np.random.seed(seed)
 
-    df_nodes = pd.DataFrame(columns=["node", "n_x", "n_y"])
+    graph = nx.Graph()
     n = 0
     for i in range(y_rows * 2 - 1):
         aux = i % 2
         for j in range(x_rows - aux):
-            y = i * distance_y / 2
-            x = j * distance_x + (aux * distance_x / 2)
+            n_y = i * distance_y / 2
+            n_x = j * distance_x + (aux * distance_x / 2)
 
             angle = np.random.rand() * 2 * math.pi
             x_off = np.random.rand() * distance_off
             y_off = np.random.rand() * distance_off
-            x += np.cos(angle) * x_off
-            y += np.sin(angle) * y_off
+            n_x += np.cos(angle) * x_off
+            n_y += np.sin(angle) * y_off
 
-            df_nodes.loc[n] = [n, x, y]
+            graph.add_node(n, pos=(n_x, n_y))
             n += 1
 
-    return df_nodes
+    return graph
+
+
+def generate_graph_random_conditional(
+    n:int=25, hearing_radius:float=100.0, seed:int=0, area_overlap:float=0.33
+) -> nx.Graph:
+    """Generates a new graph with random positions while trying to avoid to much overlapping area.
+
+    Args:
+        n (int, optional): Amount of nodes. Defaults to 25.
+        hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
+        seed (int, optional): Seed for reproducibility. Defaults to 0.
+        area_overlap (float, optional): When inserting the nodes, a check is made beforehand to see if a new random node 
+            would cause too much overlap with the existing ones. This argument specifies the maximum allowed area as a 
+            percentage of the area that a node includes with its hearing radius. Defaults to 0.33. Use higher values when
+            the generation algorithms takes too much time.
+
+    Returns:
+        nx.Graph: The generated graph.
+    """
+    np.random.seed(seed)
+
+    def find_intersection_area(c1: tuple, c2: tuple, hearing_radius:float=100.0) -> float:
+        d = math.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2)
+        rs = hearing_radius ** 2
+
+        # the circle centers are the same
+        if d == 0:
+            return math.pi * rs
+
+        # check if the circles are overlapping
+        angle = (rs + d ** 2 - rs) / (2 * hearing_radius * d)
+        if (-1 <= angle < 1):
+            theta = math.acos(angle) * 2
+            area = (0.5 * theta * rs) - (0.5 * rs * math.sin(theta))
+            return area
+
+        return 0
+
+    graph = nx.Graph()
+    area_circle = math.pi * hearing_radius ** 2
+    len_bb = math.sqrt(area_circle * n) - hearing_radius * 2
+    print(len_bb)
+    i = 0
+    while i < n:
+        pos = nx.get_node_attributes(G=graph, name="pos")
+        new_pos = np.random.rand(2) * len_bb
+        area = 0
+        for j in pos.values():
+            area += find_intersection_area(new_pos, j, hearing_radius=hearing_radius)
+        if area < area_overlap * area_circle:
+            graph.add_node(i, pos=new_pos)
+            i += 1
+
+    return graph
 
 
 def generate_random_classification_results(

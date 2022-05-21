@@ -137,9 +137,9 @@ def generate_random_classification_results(
     df = pd.DataFrame(columns=["node", "n_x", "n_y", "begin_time", "end_time", "species_code", "b_x", "b_y", "true_count"])
 
     # generate dataframe
-    x_lim, y_lim = get_bb(graph=graph, hearing_radius=hearing_radius)
-    limit_x = x_lim[1] - x_lim[0] # width of the bounding box
-    limit_y = y_lim[1] - y_lim[0] # height of the bounding box
+    xlim, ylim = get_bb(graph=graph, hearing_radius=hearing_radius)
+    limit_x = xlim[1] - xlim[0] # width of the bounding box
+    limit_y = ylim[1] - ylim[0] # height of the bounding box
     pos = nx.get_node_attributes(G=graph, name="pos")
     pos_x = np.array(list(pos.values()))[:,0]
     pos_y = np.array(list(pos.values()))[:,1]
@@ -153,8 +153,8 @@ def generate_random_classification_results(
 
                 # generate variables for current bird
                 b_pos = np.random.rand(2)
-                b_pos[0] = b_pos[0] * limit_x + x_lim[0]
-                b_pos[1] = b_pos[1] * limit_y + y_lim[0]
+                b_pos[0] = b_pos[0] * limit_x + xlim[0]
+                b_pos[1] = b_pos[1] * limit_y + ylim[0]
                 begin_time = dt_begin + dt.timedelta(seconds=(k + np.random.rand()) * max_delay)
                 end_time = begin_time + timedelta_result
 

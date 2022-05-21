@@ -75,8 +75,8 @@ def get_bb(
     pos_x = np.array(list(pos.values()))[:,0]
     pos_y = np.array(list(pos.values()))[:,1]
 
-    x_lim = (min(pos_x) - hearing_radius, max(pos_x) + hearing_radius)
-    y_lim = (min(pos_y) - hearing_radius, max(pos_y) + hearing_radius)
+    xlim = (min(pos_x) - hearing_radius, max(pos_x) + hearing_radius)
+    ylim = (min(pos_y) - hearing_radius, max(pos_y) + hearing_radius)
 
-    return x_lim, y_lim
+    return xlim, ylim
 

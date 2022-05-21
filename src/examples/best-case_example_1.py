@@ -45,7 +45,7 @@ for bird in birds:
             idx += 1
 
 # plotting
-x_lim, y_lim = get_bb(graph=graph)
+xlim, ylim = get_bb(graph=graph)
 cmap = mpl.cm.get_cmap("hsv")
 color = cmap(range(1))[0]
 
@@ -55,28 +55,28 @@ fig, ax = plt.subplots(2, 3, figsize=(14, 8))
 ax[0, 0].set(title="Initial UDG with all nodes")
 plot_graph(graph=graph, ax=ax[0, 0], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 0])
-plot_bb(graph=graph, ax=ax[0, 0], x_lim=x_lim, y_lim=y_lim)
+plot_bb(graph=graph, ax=ax[0, 0], xlim=xlim, ylim=ylim)
 
 # 1 subgraph
 ax[0, 1].set(title="Subgraph with all nodes that hear birds")
 subgraph = nx.Graph(graph.subgraph(df["node"].drop_duplicates()))
 plot_graph(graph=subgraph, ax=ax[0, 1], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 1])
-plot_bb(graph=subgraph, ax=ax[0, 1], x_lim=x_lim, y_lim=y_lim)
+plot_bb(graph=subgraph, ax=ax[0, 1], xlim=xlim, ylim=ylim)
 
 # 2 altered graph
 ax[0, 2].set(title="Alternated UDG")
 altered_graph = alter_udg(subgraph.copy())
 plot_graph(graph=altered_graph, ax=ax[0, 2], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 2])
-plot_bb(graph=altered_graph, ax=ax[0, 2], x_lim=x_lim, y_lim=y_lim)
+plot_bb(graph=altered_graph, ax=ax[0, 2], xlim=xlim, ylim=ylim)
 
 # 3 first clique
 ax[1, 0].set(title="First maximal clique")
 clique = max(nx.find_cliques(G=altered_graph), key=len)
 plot_graph(graph=altered_graph, ax=ax[1, 0], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[1, 0])
-plot_bb(graph=altered_graph, ax=ax[1, 0], x_lim=x_lim, y_lim=y_lim)
+plot_bb(graph=altered_graph, ax=ax[1, 0], xlim=xlim, ylim=ylim)
 for c in clique:
     circ_patch = mpl.patches.Circle(pos[c], radius=100.0, color="tab:red", fill=True, alpha=0.2, clip_on=False)
     ax[1, 0].add_patch(circ_patch)
@@ -88,7 +88,7 @@ ax[1, 1].set(title="Second maximal clique")
 clique = max(nx.find_cliques(G=altered_graph), key=len)
 plot_graph(graph=altered_graph, ax=ax[1, 1], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[1, 1])
-plot_bb(graph=altered_graph, ax=ax[1, 1], x_lim=x_lim, y_lim=y_lim)
+plot_bb(graph=altered_graph, ax=ax[1, 1], xlim=xlim, ylim=ylim)
 for c in clique:
     circ_patch = mpl.patches.Circle(pos[c], radius=100.0, color="tab:red", fill=True, alpha=0.2, clip_on=False)
     ax[1, 1].add_patch(circ_patch)
@@ -100,7 +100,7 @@ ax[1, 2].set(title="Third maximal clique")
 clique = max(nx.find_cliques(G=altered_graph), key=len)
 plot_graph(graph=altered_graph, ax=ax[1, 2], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[1, 2])
-plot_bb(graph=altered_graph, ax=ax[1, 2], x_lim=x_lim, y_lim=y_lim)
+plot_bb(graph=altered_graph, ax=ax[1, 2], xlim=xlim, ylim=ylim)
 for c in clique:
     circ_patch = mpl.patches.Circle(pos[c], radius=100.0, color="tab:red", fill=True, alpha=0.2, clip_on=False)
     ax[1, 2].add_patch(circ_patch)

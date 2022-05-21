@@ -38,7 +38,7 @@ def plot_birds(
 
 
 def plot_bb(
-    ax:mpl.axes.Axes, graph:nx.Graph, hearing_radius:float=100.0, alpha:float=0.5, x_lim:float=None, y_lim:float=None, with_text=True
+    ax:mpl.axes.Axes, graph:nx.Graph, hearing_radius:float=100.0, alpha:float=0.5, xlim:float=None, ylim:float=None, with_text=True
 ) -> None:
     """Plot the bounding box of the graph, i. e. the smallest rectangle enclosing the entire
         graph including the hearing radii of the nodes.
@@ -50,25 +50,25 @@ def plot_bb(
         alpha (float, optional): Opacity of the plotted bounding box. Defaults to 1.0.
         with_text (bool, optional): If True, add text labels describing the size of the bounding box in meters. Defaults to True.
     """
-    if not x_lim and not y_lim:
-        x_lim, y_lim = get_bb(graph=graph, hearing_radius=hearing_radius)
+    if not xlim and not ylim:
+        xlim, ylim = get_bb(graph=graph, hearing_radius=hearing_radius)
 
     # plot text if requested
     if with_text:
-        x_dist = x_lim[1] - x_lim[0]
-        y_dist = y_lim[1] - y_lim[0]
+        x_dist = xlim[1] - xlim[0]
+        y_dist = ylim[1] - ylim[0]
         x_text = f"{round(x_dist, 1)}m"
         y_text = f"{round(y_dist, 1)}m"
-        x_pos = (x_lim[0] + x_dist / 2, y_lim[0] - 20)
-        y_pos = (x_lim[0] - 15, y_lim[0] + y_dist / 2)
+        x_pos = (xlim[0] + x_dist / 2, ylim[0] - 20)
+        y_pos = (xlim[0] - 15, ylim[0] + y_dist / 2)
         ax.text(x_pos[0], x_pos[1], x_text, horizontalalignment="center", verticalalignment="center")
         ax.text(y_pos[0], y_pos[1], y_text, horizontalalignment="center", verticalalignment="center", rotation=90)
 
     # plot bounding box
-    ax.plot([x_lim[0], x_lim[1]], [y_lim[0], y_lim[0]], c="black", alpha=alpha)
-    ax.plot([x_lim[1], x_lim[1]], [y_lim[1], y_lim[0]], c="black", alpha=alpha)
-    ax.plot([x_lim[1], x_lim[0]], [y_lim[1], y_lim[1]], c="black", alpha=alpha)
-    ax.plot([x_lim[0], x_lim[0]], [y_lim[0], y_lim[1]], c="black", alpha=alpha)
+    ax.plot([xlim[0], xlim[1]], [ylim[0], ylim[0]], c="black", alpha=alpha)
+    ax.plot([xlim[1], xlim[1]], [ylim[1], ylim[0]], c="black", alpha=alpha)
+    ax.plot([xlim[1], xlim[0]], [ylim[1], ylim[1]], c="black", alpha=alpha)
+    ax.plot([xlim[0], xlim[0]], [ylim[0], ylim[1]], c="black", alpha=alpha)
 
 
 def draw_circles(
@@ -144,7 +144,7 @@ def plot_graph(
 
     # draw smallest circles
     if with_smallest_circles:
-        smallest_circles = get_smallest_enclosing_circles(graph=graph, hearing_radius=hearing_radius)
+        smallest_circles = get_smallest_enclosing_circles(graph=graph)
         draw_circles(ax=ax, circles=smallest_circles.values(), color="red")
 
     # draw circumcircles

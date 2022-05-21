@@ -48,9 +48,9 @@ x_lim, y_lim = get_bb(graph=graph)
 cmap = mpl.cm.get_cmap("hsv")
 color = cmap(range(1))[0]
 
-fig, ax = plt.subplots(2, 3, figsize=(16, 9))
-fig.suptitle("A best-case example resulting in an ideal procedure of the implemented algorithm\n" +
-                "for one time window/step. The red crosses represent birds.", fontsize="x-large")
+fig, ax = plt.subplots(2, 3, figsize=(14, 8))
+fig.suptitle("A best-case example resulting in the algorithm's correct estimation of birds for a one-time window/step.\n" +
+                "The three red crosses represent one bird each, and the algorithm removes exactly the same number of maximal cliques.")
 
 # 0 initial graph
 ax[0, 0].set(title="Initial graph with all nodes")
@@ -59,7 +59,7 @@ plot_birds(df=df, ax=ax[0, 0])
 plot_bb(graph=graph, ax=ax[0, 0], x_lim=x_lim, y_lim=y_lim)
 
 # 1 subgraph
-ax[0, 1].set(title="Graph without the nodes which don't hear birds")
+ax[0, 1].set(title="Removed the nodes that don't hear birds")
 subgraph = nx.Graph(graph.subgraph(df["node"].drop_duplicates()))
 plot_graph(graph=subgraph, ax=ax[0, 1], fig=fig, with_edges=True, with_hearing_radii=True)
 plot_birds(df=df, ax=ax[0, 1])

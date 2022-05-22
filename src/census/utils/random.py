@@ -50,7 +50,7 @@ def generate_graph_diamond_pattern(
 
 
 def generate_graph_random_conditional(
-    n:int=25, hearing_radius:float=100.0, seed:int=0, area_overlap:float=0.33, bb_limit:float=1.0
+    n:int=25, hearing_radius:float=100.0, seed:int=0, pct_overlap:float=0.5, bb_limit:float=1.0
 ) -> nx.Graph:
     """Generates a new graph with random positions while trying to avoid to much overlapping area.
 
@@ -58,9 +58,9 @@ def generate_graph_random_conditional(
         n (int, optional): Amount of nodes. Defaults to 25.
         hearing_radius (float, optional): Radius in meters within which birds can be detected by a node. Defaults to 100.0.
         seed (int, optional): Seed for reproducibility. Defaults to 0.
-        area_overlap (float, optional): When inserting the nodes, a check is made beforehand to see if a new random node 
+        pct_overlap (float, optional): When inserting the nodes, a check is made beforehand to see if a new random node 
             would cause too much overlap with the existing ones. This argument specifies the maximum allowed area as a 
-            percentage of the area that a node includes with its hearing radius. Defaults to 0.33. Use higher values when
+            percentage of the area that a node includes with its hearing radius. Defaults to 0.5. Use higher values when
             the generation algorithms takes too much time.
         bb_limit (float, optional): Restrict how big the bounding box can get. The nodes will be positioned in a 
             square with sides of size: sqrt(area_ud * n) - bb_limit * 2 * hearing_radius, area_ud = area of one unit disk.
@@ -85,21 +85,24 @@ def generate_graph_random_conditional(
         if (-1 <= angle < 1):
             theta = math.acos(angle) * 2
             area = (0.5 * theta * rs) - (0.5 * rs * math.sin(theta))
-            return area
+            return 2 * area
 
         return 0
 
     graph = nx.Graph()
     area_ud = math.pi * hearing_radius ** 2
+    abs_overlap = pct_overlap * area_ud
     len_bb = math.sqrt(area_ud * n) - bb_limit * 2 * hearing_radius
     i = 0
     while i < n:
         pos = nx.get_node_attributes(G=graph, name="pos")
         new_pos = np.random.rand(2) * len_bb
-        area = 0
-        for j in pos.values():
-            area += find_intersection_area(new_pos, j, hearing_radius=hearing_radius)
-        if area < area_overlap * area_ud:
+        overlap = 0
+        for node, other_pos in pos.items():
+            if math.dist(new_pos, other_pos) > 2 * hearing_radius:
+                continue
+            overlap += find_intersection_area(new_pos, other_pos, hearing_radius=hearing_radius)
+        if overlap < abs_overlap:
             graph.add_node(i, pos=new_pos)
             i += 1
 

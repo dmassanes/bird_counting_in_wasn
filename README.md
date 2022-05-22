@@ -65,6 +65,12 @@ The last three columns, "b_x", "b_y", and "true_count", would usually not be ava
 
 ![Smallest enclosing circle example 1](images/smallest-enclosing-circle_example_1.jpg)
 
+## Random graph generation
+
+![Graph generation example 1](images/graph-generation_example_1.jpg)
+
+## Random data generation
+
 # References
 <a id="1">[1]</a> H. Gros-desormeaux, P. Hunel, and N. Vidot, Wildlife Assessment Using Wireless Sensor Networks, Wireless Sensor Networks: Application - Centric Design, 2010.
 

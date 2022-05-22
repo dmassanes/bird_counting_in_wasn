@@ -107,8 +107,10 @@ def generate_random_classification_results(
     dt_begin:dt.datetime=dt.datetime(1970, 1, 1, 0, 0, 0), dt_end:dt.datetime=dt.datetime(1970, 1, 1, 3, 0, 0), 
     amount_per_species:dict={"comcha": 3}, songs_per_bird:dict={"comcha": (125, 300)},
 ) -> pd.DataFrame:
-    """Randomly generates classification results given a set of birds and a per-species interval containing
-        the minimum and maximum number of songs per bird of that species for a given time period.
+    """Conditionally generate random data containing classification results for a given WASN.
+        Specify a time period during which bird songs will be generated in the habitat (bounding box) 
+        monitored by the WASN. Additionally, specify which bird species, how many birds per species, and 
+        how often the birds sing within the habitat and time period.
 
     Args:
         graph (nx.Graph): The graph.
@@ -117,7 +119,8 @@ def generate_random_classification_results(
         dt_begin (dt.datetime): Start of the time period. Defaults to dt.datetime(1970, 1, 1, 0, 0, 0).
         dt_end (dt.datetime): End of the time period. Defaults to dt.datetime(1970, 1, 1, 3, 0, 0).
         amount_per_species (dict): Amount of birds per species. Defaults to {"comcha": 3}.
-        songs_per_bird (dict): Min and max amount of songs per bird per species. Defaults to {"comcha": (125, 300)}.
+        songs_per_bird (dict): Min and max amount of songs per bird per species. For each bird, the amount
+            of songs will be randomly selected from this interval. Defaults to {"comcha": (125, 300)}.
 
     Returns:
         pd.DataFrame: Contains all the necessary information for the algorithm. 

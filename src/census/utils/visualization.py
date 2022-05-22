@@ -10,6 +10,7 @@ from census.utils.triangles import get_circumcircles
 from census.utils.graphs import get_bb
 from census.utils.definitions import taxonomy
 
+
 def plot_birds(
     df:pd.DataFrame, ax:mpl.axes.Axes, species_code_list:list=None, alpha:float=1.0, cmap:mpl.colors.Colormap=None
 ) -> None:

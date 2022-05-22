@@ -50,7 +50,7 @@ def generate_graph_diamond_pattern(
 
 
 def generate_graph_random_conditional(
-    n:int=25, hearing_radius:float=100.0, seed:int=0, area_overlap:float=0.33
+    n:int=25, hearing_radius:float=100.0, seed:int=0, area_overlap:float=0.33, bb_limit:float=1.0
 ) -> nx.Graph:
     """Generates a new graph with random positions while trying to avoid to much overlapping area.
 
@@ -62,6 +62,10 @@ def generate_graph_random_conditional(
             would cause too much overlap with the existing ones. This argument specifies the maximum allowed area as a 
             percentage of the area that a node includes with its hearing radius. Defaults to 0.33. Use higher values when
             the generation algorithms takes too much time.
+        bb_limit (float, optional): Restrict how big the bounding box can get. The nodes will be positioned in a 
+            square with sides of size: sqrt(area_ud * n) - bb_limit * 2 * hearing_radius, area_ud = area of one unit disk.
+            Choose float in [0.0, 1.0]. 1.0 ensures that the bounding boxes' size is similar to the ones created
+            by the function "generate_graph_diamond_pattern". Defaults to 1.0.
 
     Returns:
         nx.Graph: The generated graph.
@@ -86,8 +90,8 @@ def generate_graph_random_conditional(
         return 0
 
     graph = nx.Graph()
-    area_circle = math.pi * hearing_radius ** 2
-    len_bb = math.sqrt(area_circle * n) - hearing_radius * 2
+    area_ud = math.pi * hearing_radius ** 2
+    len_bb = math.sqrt(area_ud * n) - bb_limit * 2 * hearing_radius
     i = 0
     while i < n:
         pos = nx.get_node_attributes(G=graph, name="pos")
@@ -95,7 +99,7 @@ def generate_graph_random_conditional(
         area = 0
         for j in pos.values():
             area += find_intersection_area(new_pos, j, hearing_radius=hearing_radius)
-        if area < area_overlap * area_circle:
+        if area < area_overlap * area_ud:
             graph.add_node(i, pos=new_pos)
             i += 1
 

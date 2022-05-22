@@ -4,8 +4,48 @@ This module contains util/helper functions related to graphs.
 import networkx as nx
 import itertools
 import math
+import utm
 import numpy as np
+import pandas as pd
 from census.utils.triangles import get_smallest_enclosing_circles
+
+
+def build_initial_graph(
+    df:pd.DataFrame, coords:str="2d"
+) -> nx.Graph:
+    """Build the initial graph containing only the nodes and their positions, given the information 
+        from the DataFrame. The positions must either be 2d- or geo coordinates. Geo-coordinates 
+        will get converted into 2d coordinates with the "utm" Python library.
+
+    Args:
+        df (pd.DataFrame): Contains the node information. Must either have the columns ["node", "n_x", "n_y"] 
+            or ["node", "lat", "lon"] depending on which type of coordinates the nodes' positions have.
+        coords (str, optional): Can be "2d" or "geo" depending the type of coordinates. Defaults to "2d".
+
+    Returns:
+        nx.Graph: The graph containing only the nodes and their positions.
+    """
+    graph = nx.Graph()
+
+    if coords == "2d": # from 2d coordinates
+        df_node = df[["node", "n_x", "n_y"]].drop_duplicates(subset="node")
+        for index, row in df_node.iterrows():
+            node = int(row["node"])
+            n_x = row["n_x"]
+            n_y = row["n_y"]
+            graph.add_node(node, pos=(n_x, n_y))
+
+    if coords == "geo": # from geo coordinates
+        df_node = df[["node", "lat", "lon"]].drop_duplicates(subset="node")
+        for index, row in df_node.iterrows():
+            node = int(row["node"])
+            lat = row["lat"]
+            lon = row["lon"]
+            u = utm.from_latlon(lat, lon)
+            x, y = u[:2]
+            graph.add_node(node, pos=(x, y))
+
+    return graph
 
 
 def build_udg(

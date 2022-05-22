@@ -36,7 +36,7 @@ The implementations contained in this repository rely on the following Python li
 
 ## One-time step/window
 
-
+![Time window example 1](images/time-window_example_1.jpg)
 
 ## Alternating the UDG
 
